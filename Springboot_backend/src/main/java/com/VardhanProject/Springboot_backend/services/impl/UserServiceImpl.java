@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(UserDto userDto, Integer uid) {
         User user = this.userRepo.findById(uid).orElseThrow(()-> new ResourceNotFoundException("User"," id ",uid));
         user.setName(userDto.getName());
-        user.setUid(userDto.getUid());
         user.setRole(userDto.getRole());
         user.setNumber(userDto.getNumber());
+        user.setPassword(userDto.getPassword());
 
         User updateUser = this.userRepo.save(user);
 
@@ -36,13 +36,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserById(Integer uid) {
-        return null;
+        User user = this.userRepo.findById(uid).orElseThrow(()-> new ResourceNotFoundException("User","Id",uid));
+        System.out.println(user.getPassword());
+        return this.userToDto(user);
     }
 
-    @Override
-    public List<UserDto> getAllUser() {
-        return null;
-    }
+//    @Override
+//    public List<UserDto> getAllUser() {
+//        return null;
+//    }
 
     public User dtoToUser(UserDto userDto){
         User user = new User();
@@ -50,6 +52,7 @@ public class UserServiceImpl implements UserService {
         user.setUid(userDto.getUid());
         user.setRole(userDto.getRole());
         user.setNumber(userDto.getNumber());
+        user.setPassword(userDto.getPassword());
         return user;
     }
 
@@ -59,6 +62,9 @@ public class UserServiceImpl implements UserService {
         userDto.setName(user.getName());
         userDto.setRole(user.getRole());
         userDto.setNumber(user.getNumber());
+        userDto.setPassword(user.getPassword());
+        System.out.println(user.getPassword());
+        System.out.println(userDto.getPassword());
         return userDto;
     }
 }
