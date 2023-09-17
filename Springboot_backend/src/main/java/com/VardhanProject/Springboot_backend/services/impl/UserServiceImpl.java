@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
         User user = this.userRepo.findById(uid).orElseThrow(()-> new ResourceNotFoundException("User"," id ",uid));
         user.setName(userDto.getName());
         user.setRole(userDto.getRole());
-        user.setNumber(userDto.getNumber());
+       // user.setNumber(userDto.getNumber());
         user.setPassword(userDto.getPassword());
 
         User updateUser = this.userRepo.save(user);
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setUid(userDto.getUid());
         user.setRole(userDto.getRole());
-        user.setNumber(userDto.getNumber());
+       // user.setNumber(userDto.getNumber());
         user.setPassword(userDto.getPassword());
         return user;
     }
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         userDto.setUid(user.getUid());
         userDto.setName(user.getName());
         userDto.setRole(user.getRole());
-        userDto.setNumber(user.getNumber());
+       // userDto.setNumber(user.getNumber());
         userDto.setPassword(user.getPassword());
         System.out.println(user.getPassword());
         System.out.println(userDto.getPassword());

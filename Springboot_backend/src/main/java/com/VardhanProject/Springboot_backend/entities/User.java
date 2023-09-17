@@ -16,6 +16,9 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Integer uid;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -32,5 +35,7 @@ public class User {
     @Column(name = "user_image")
     @JdbcTypeCode(SqlTypes.BLOB)
     private String user_image;
+
+
 
 }
