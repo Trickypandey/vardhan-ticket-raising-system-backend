@@ -8,10 +8,10 @@ import lombok.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-
+@Service
 public class JWTService {
-    @Service
-    public class JWTService {
+
+
         @Value("${jwt.algorithm.key}")
         private String algorithmKey;
 
@@ -46,4 +46,4 @@ public class JWTService {
 
 
     }
-}
+
