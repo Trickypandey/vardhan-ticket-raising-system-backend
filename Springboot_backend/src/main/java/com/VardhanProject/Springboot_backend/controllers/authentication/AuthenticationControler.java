@@ -1,8 +1,10 @@
 package com.VardhanProject.Springboot_backend.controllers.authentication;
 
 
-import com.VardhanProject.Springboot_backend.controllers.authentication.model.LoginBody;
-import com.VardhanProject.Springboot_backend.controllers.authentication.model.LoginResponse;
+import com.VardhanProject.Springboot_backend.model.LoginResponse;
+import com.VardhanProject.Springboot_backend.model.LoginBody;
+import com.VardhanProject.Springboot_backend.exceptions.UserAlreadyExistsException;
+import com.VardhanProject.Springboot_backend.model.RegistrationBody;
 import com.VardhanProject.Springboot_backend.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

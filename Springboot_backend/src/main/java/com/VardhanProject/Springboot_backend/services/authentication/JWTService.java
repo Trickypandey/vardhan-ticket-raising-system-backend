@@ -1,6 +1,8 @@
 package com.VardhanProject.Springboot_backend.services.authentication;
 
+import com.auth0.jwt.*;
 import com.VardhanProject.Springboot_backend.entities.User;
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.annotation.PostConstruct;
 import com.VardhanProject.Springboot_backend.entities.dao.UserDAO;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 @Service
 public class JWTService {
+
 
 
         @Value("${jwt.algorithm.key}")

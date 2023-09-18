@@ -1,5 +1,4 @@
-package com.VardhanProject.Springboot_backend.controllers.authentication.model;
-
+package com.VardhanProject.Springboot_backend.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

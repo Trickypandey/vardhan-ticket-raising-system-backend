@@ -2,6 +2,12 @@ package com.VardhanProject.Springboot_backend.services.authentication;
 
 import com.VardhanProject.Springboot_backend.entities.dao.UserDAO;
 import com.VardhanProject.Springboot_backend.entities.User;
+import com.VardhanProject.Springboot_backend.model.LoginResponse;
+import com.VardhanProject.Springboot_backend.model.LoginBody;
+import com.VardhanProject.Springboot_backend.model.RegistrationBody;
+import com.VardhanProject.Springboot_backend.exceptions.UserAlreadyExistsException;
+
+import java.util.Optional;
 
 public class UserServices {
     private UserDAO UserDAO;
@@ -31,12 +37,9 @@ public class UserServices {
 
     }
     public String loginUser(LoginBody loginBody){
-        Optional<LocalUser> opUser=localUserDAO.findByUsernameIgnoreCase(loginBody.getUsername());
+        Optional<User> opUser=UserDAO.findByUsernameIgnoreCase(loginBody.getUsername());
         if(opUser.isPresent()){
             User user=opUser.get();
-            if(encryptionService.verifyPassword(loginBody.getPassword(),user.getPassword())){
-                return jwtService.generateJWT(user);
-            }
         }
         return null;
     }

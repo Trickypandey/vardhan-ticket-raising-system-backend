@@ -1,4 +1,4 @@
-package com.VardhanProject.Springboot_backend.controllers.authentication.model;
+package com.VardhanProject.Springboot_backend.model;
 
 import lombok.Getter;
 import lombok.Setter;
