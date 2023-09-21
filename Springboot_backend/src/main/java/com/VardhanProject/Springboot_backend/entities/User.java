@@ -33,7 +33,6 @@ public class User {
     private String number;
 
     @Column(name = "user_image")
-    @JdbcTypeCode(SqlTypes.BLOB)
     private String user_image;
 
     @Column(name = "email", nullable = false, unique = true)

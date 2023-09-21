@@ -6,6 +6,7 @@ import com.VardhanProject.Springboot_backend.model.LoginBody;
 import com.VardhanProject.Springboot_backend.exceptions.UserAlreadyExistsException;
 import com.VardhanProject.Springboot_backend.model.RegistrationBody;
 import com.VardhanProject.Springboot_backend.services.UserService;
+import com.VardhanProject.Springboot_backend.services.authentication.UserServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth ")
 public class AuthenticationControler {
 
-    private UserService userService;
-    public void AuthenticationController(UserService userService){
-        this.userService=userService;
+    private UserServices userServices;
+    public void AuthenticationController(UserServices userService){
+        this.userServices=userService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@Valid @RequestBody RegistrationBody registrationBody){
+    public ResponseEntity registerUser(@Valid @RequestBody RegistrationBody registrationBody) {
         try {
-            userService.registerUser(registrationBody);
+            userServices.registerUser(registrationBody);
             return ResponseEntity.ok().build();
         } catch (UserAlreadyExistsException e) {
             // You might want to handle the exception more gracefully here
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
 
         }
+    }
     @PostMapping("/login")
     public ResponseEntity loginUser( @RequestBody LoginBody loginBody){
-        String jwt = userService.loginUser(loginBody);
+        String jwt = userServices.loginUser(loginBody);
         if(jwt == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
