@@ -13,7 +13,7 @@ public class UserServices {
     private UserDAO UserDAO;
 
     private JWTService jwtService;
-    public UserService(UserDAO UserDAO, JWTService jwtService){
+    public UserServices(UserDAO UserDAO, JWTService jwtService){
         this.UserDAO=UserDAO;
 
         this.jwtService = jwtService;
@@ -27,11 +27,11 @@ public class UserServices {
         }
 
         User user=new User();
-        user.setEmail(registrationBody.getEmail());
-        user.setFirstName(registrationBody.getFirstName());
-        user.setLastName(registrationBody.getLastName());
-        user.setPassword(Service.Password(registrationBody.getPassword()));
         user.setUsername(registrationBody.getUsername());
+        user.setName(registrationBody.getName());
+        user.setRole(registrationBody.getRole());
+        user.setPassword(registrationBody.getPassword());
+        user.setNumber(registrationBody.getNumber());
 
         return UserDAO.save(user);
 

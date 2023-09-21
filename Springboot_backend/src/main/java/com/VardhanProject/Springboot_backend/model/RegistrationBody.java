@@ -14,7 +14,7 @@ public class RegistrationBody {
     @Email
     @NotBlank
     @NotNull
-    private String email;
+    private String name;
 
     @Getter
     @NotBlank
@@ -27,11 +27,16 @@ public class RegistrationBody {
     @Getter
     @NotBlank
     @NotNull
-    private String firstName;
+    private String role;
 
     @Getter
     @NotBlank
     @NotNull
-    private String lastName;
+    private String number;
+
+    @Getter
+    @NotBlank
+    @NotNull
+    private String email;
 
 }
