@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class UserControler {
     private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@Validated @RequestBody UserDto userDto){
         UserDto createUserDto = this.userService.createUser(userDto);
         return new ResponseEntity<>(createUserDto, HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class UserControler {
 
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUserDetail(@Valid @RequestBody UserDto userDto,@PathVariable int userId) {
+    public ResponseEntity<UserDto> updateUserDetail(@RequestBody UserDto userDto,@PathVariable int userId) {
         // Call the UserService to retrieve the user by ID
         UserDto resultDto = this.userService.updateUser(userDto,userId);
         return ResponseEntity.ok(resultDto);
