@@ -1,24 +1,79 @@
 package com.VardhanProject.Springboot_backend.entities;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
-@Table(name = "Users")
-@NoArgsConstructor
+import java.util.Collection;
+
 @Getter
 @Setter
-public class User {
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "user")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int uid ;
-    private String password;
-    private String name ;
-    private String role ;
-    @Column(length = 10)
-    private Integer number;
-}
+    @Column(name = "user_id", nullable = false)
+    private Integer uid;
 
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @Column(name = "number", length = 10)
+    @JdbcTypeCode(SqlTypes.NUMERIC)
+    private Integer number;
+
+
+    @Column(name = "user_image")
+    private String user_image;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+}

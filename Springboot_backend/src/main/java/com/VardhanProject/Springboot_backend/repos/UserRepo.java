@@ -2,6 +2,11 @@ package com.VardhanProject.Springboot_backend.repos;
 
 import com.VardhanProject.Springboot_backend.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepo extends JpaRepository<User,Integer> {
+import java.util.Optional;
+
+@Repository
+public interface UserRepo extends JpaRepository<User,String> {
+    Optional<User> findByUsername(String username);
 }
