@@ -5,71 +5,53 @@ import com.VardhanProject.Springboot_backend.payloads.UserDto;
 import com.VardhanProject.Springboot_backend.repos.UserRepo;
 import com.VardhanProject.Springboot_backend.services.UserService;
 import com.VardhanProject.Springboot_backend.exceptions.ResourceNotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    ModelMapper modelMapper;
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = this.dtoToUser(userDto);
+
+
+        User user = this.modelMapper.map(userDto,User.class);
         User savedUser = this.userRepo.save(user);
-        return this.userToDto(savedUser);
+        return modelMapper.map(savedUser, UserDto.class);
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, Integer uid) {
-        User user = this.userRepo.findById(uid.toString()).orElseThrow(()-> new ResourceNotFoundException("User"," id ",uid));
-        user.setName(userDto.getName());
-        user.setRole(userDto.getRole());
-        user.setNumber(userDto.getNumber());
-        user.setPassword(userDto.getPassword());
+        User user = this.userRepo.findById(uid.toString()).orElseThrow(() ->
+                new ResourceNotFoundException("User", "id", uid));
 
+        modelMapper.map(userDto, user);
         User updateUser = this.userRepo.save(user);
 
-        return this.userToDto(updateUser);
+        return modelMapper.map(updateUser, UserDto.class);
     }
 
     @Override
     public UserDto getUserById(Integer uid) {
-        User user = this.userRepo.findById(uid.toString()).orElseThrow(()-> new ResourceNotFoundException("User","Id",uid));
-        System.out.println(user.getPassword());
-        return this.userToDto(user);
+        User user = this.userRepo.findById(uid.toString()).orElseThrow(() ->
+                new ResourceNotFoundException("User", "Id", uid));
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public List<UserDto> getAllUser() {
-        return null;
+        List<User> users = userRepo.findAll();
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserDto.class))
+                .collect(Collectors.toList());
     }
 
-//    @Override
-//    public List<UserDto> getAllUser() {
-//        return null;
-//    }
-
-    public User dtoToUser(UserDto userDto){
-        User user = new User();
-        user.setName(userDto.getName());
-        user.setUid(userDto.getUid());
-        user.setRole(userDto.getRole());
-        user.setNumber(userDto.getNumber());
-        user.setPassword(userDto.getPassword());
-        return user;
-    }
-
-    public  UserDto userToDto(User user){
-        UserDto userDto = new UserDto();
-        userDto.setUid(user.getUid());
-        userDto.setName(user.getName());
-        userDto.setRole(user.getRole());
-        userDto.setNumber(user.getNumber());
-        userDto.setPassword(user.getPassword());
-        System.out.println(user.getPassword());
-        System.out.println(userDto.getPassword());
-        return userDto;
-    }
 }
