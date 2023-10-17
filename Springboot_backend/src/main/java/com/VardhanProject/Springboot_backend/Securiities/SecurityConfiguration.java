@@ -26,21 +26,21 @@ public class SecurityConfiguration {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     public static final String[] PUBLIC_URL = {
-            "auth/**",
-            "swagger-ui/**",
+            "/auth/**",
+            "/swagger-ui/**",
             "/api",
-            "swagger-resource/**",
-            "webjars/**",
-            "swagger-ui.html",
+            "/swagger-resource/**",
+            "/webjars/**",
+            "/swagger-ui.html",
             "/api/customers/**"
     };
     public static final String[] ADMIN_URL = {
-            "categories/**",
-            "users/**",
+            "/categories/**",
+            "/users/**",
     };
     public static final String[] SHARED_URL = {
-            "users/update/**",
-            "categories/get"
+            "/users/update/**",
+            "/categories/get"
     };
 
     @Bean
@@ -59,10 +59,12 @@ public class SecurityConfiguration {
         http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
         return builder.getAuthenticationManager();

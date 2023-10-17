@@ -17,5 +17,5 @@ public class CustomerDto {
     private String customer_contact_person;
     private String customer_email;
     private String customer_phone;
-    private List<Address> addresses;
+    private List<AddressDto> addresses;
 }

@@ -36,8 +36,8 @@ public class Address {
     @Column(name = "longitude")
     private String longitude;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, optional = false)
-    @JoinColumn(name = "customer_customer_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
 }

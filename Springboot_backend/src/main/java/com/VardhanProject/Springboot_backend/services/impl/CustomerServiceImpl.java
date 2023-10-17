@@ -22,20 +22,26 @@ public class CustomerServiceImpl implements CustomerService {
     private ModelMapper modelMapper;
 
     public CustomerDto addCustomer(CustomerDto customerDto) {
-        printCustomerDto(customerDto);
         // Map the CustomerDto to a Customer entity
         Customer customer = modelMapper.map(customerDto, Customer.class);
 
         // Map the AddressDto objects to Address entities within the Customer entity
         List<Address> addresses = customerDto.getAddresses().stream()
-                .map(addressDto -> modelMapper.map(addressDto, Address.class))
+                .map(addressDto -> {
+                    Address address = modelMapper.map(addressDto, Address.class);
+                    address.setCustomer(customer); // Set the Customer reference for each Address
+                    return address;
+                })
                 .collect(Collectors.toList());
+
         customer.setAddresses(addresses);
 
         // Save the Customer entity
         Customer savedCustomer = this.customerRepository.save(customer);
+
         // Map the saved Customer entity back to a CustomerDto
         CustomerDto savedCustomerDto = modelMapper.map(savedCustomer, CustomerDto.class);
+        printCustomerDto(savedCustomerDto);
         return savedCustomerDto;
     }
     @Override
