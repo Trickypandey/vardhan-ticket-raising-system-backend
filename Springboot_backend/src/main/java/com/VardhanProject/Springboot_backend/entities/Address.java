@@ -1,21 +1,25 @@
 package com.VardhanProject.Springboot_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "address")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "address_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "address_id", nullable = false,unique = true)
     private Integer address_id;
 
     @Column(name = "address_line_1", nullable = false)
-    private String address_line1;
+    private String address_line_1;
 
     @Column(name = "area", nullable = false, length = 75)
     private String area;
@@ -33,7 +37,7 @@ public class Address {
     private String longitude;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, optional = false)
-    @JoinColumn(name = "coustomer_coustomer_id", nullable = false)
-    private Coustomer coustomer;
+    @JoinColumn(name = "customer_customer_id", nullable = false)
+    private Customer customer;
 
 }

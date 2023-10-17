@@ -31,7 +31,8 @@ public class SecurityConfiguration {
             "/api",
             "swagger-resource/**",
             "webjars/**",
-            "swagger-ui.html"
+            "swagger-ui.html",
+            "/api/customers/**"
     };
     public static final String[] ADMIN_URL = {
             "categories/**",
