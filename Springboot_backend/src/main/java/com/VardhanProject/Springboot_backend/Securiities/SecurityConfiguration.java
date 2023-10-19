@@ -27,6 +27,7 @@ public class SecurityConfiguration {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     public static final String[] PUBLIC_URL = {
             "auth/**",
+            "api/**",
             "swagger-ui/**",
             "/api",
             "swagger-resource/**",
@@ -48,7 +49,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorization) -> authorization
-                        .requestMatchers(ADMIN_URL).hasRole("Admin")
+                        .requestMatchers(ADMIN_URL).permitAll()
                         .requestMatchers(PUBLIC_URL).permitAll()
                         .anyRequest().authenticated()
                 )

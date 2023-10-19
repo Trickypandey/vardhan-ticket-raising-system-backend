@@ -30,8 +30,7 @@ import java.util.Collections;
 @RequestMapping("/auth")
 public class AuthenticationControler {
 
-    @Autowired
-    private AuthSvcImpl authSvc;
+
     @Autowired
     private JwtUtil jwtUtil;
 

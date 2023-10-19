@@ -1,8 +1,11 @@
 package com.VardhanProject.Springboot_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Getter
 @Setter
@@ -15,7 +18,7 @@ public class Address {
     private Integer address_id;
 
     @Column(name = "address_line_1", nullable = false)
-    private String address_line1;
+    private String address_line_1;
 
     @Column(name = "area", nullable = false, length = 75)
     private String area;
@@ -32,8 +35,9 @@ public class Address {
     @Column(name = "longitude")
     private String longitude;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, optional = false)
-    @JoinColumn(name = "coustomer_coustomer_id", nullable = false)
-    private Coustomer coustomer;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
 }
