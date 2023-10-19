@@ -21,12 +21,11 @@ public class CustomerController {
 
     @PostMapping("/add")
     public ResponseEntity<CustomerDto> addCustomer(@RequestBody CustomerDto customerDto) {
-        printCustomerDto(customerDto);
         CustomerDto addedCustomer = customerService.addCustomer(customerDto);
         return new ResponseEntity<>(addedCustomer,HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/getall")
     public List<Customer> getAllCustomersWithAddresses() {
         return customerRepository.findAllCustomersWithAddresses();
     }

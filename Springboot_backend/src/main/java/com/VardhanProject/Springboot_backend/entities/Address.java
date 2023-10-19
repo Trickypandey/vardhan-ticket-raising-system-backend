@@ -1,21 +1,20 @@
 package com.VardhanProject.Springboot_backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Getter
 @Setter
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "address")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "address_id", nullable = false,unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "address_id", nullable = false)
     private Integer address_id;
 
     @Column(name = "address_line_1", nullable = false)
@@ -36,8 +35,9 @@ public class Address {
     @Column(name = "longitude")
     private String longitude;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
 }

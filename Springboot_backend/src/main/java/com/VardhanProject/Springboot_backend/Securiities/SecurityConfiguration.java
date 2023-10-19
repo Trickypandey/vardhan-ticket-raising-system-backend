@@ -26,21 +26,21 @@ public class SecurityConfiguration {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
     public static final String[] PUBLIC_URL = {
-            "/auth/**",
-            "/swagger-ui/**",
+            "auth/**",
+            "api/**",
+            "swagger-ui/**",
             "/api",
-            "/swagger-resource/**",
-            "/webjars/**",
-            "/swagger-ui.html",
-            "/api/customers/**"
+            "swagger-resource/**",
+            "webjars/**",
+            "swagger-ui.html"
     };
     public static final String[] ADMIN_URL = {
-            "/categories/**",
-            "/users/**",
+            "categories/**",
+            "users/**",
     };
     public static final String[] SHARED_URL = {
-            "/users/update/**",
-            "/categories/get"
+            "users/update/**",
+            "categories/get"
     };
 
     @Bean
@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorization) -> authorization
-                        .requestMatchers(ADMIN_URL).hasRole("Admin")
+                        .requestMatchers(ADMIN_URL).permitAll()
                         .requestMatchers(PUBLIC_URL).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -59,12 +59,10 @@ public class SecurityConfiguration {
         http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration builder) throws Exception {
         return builder.getAuthenticationManager();

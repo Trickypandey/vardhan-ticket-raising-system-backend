@@ -58,12 +58,6 @@ public class JwtUtil {
         }
     }
 
-    private String createToken(Map<String, Object> claims, String subject) {
-
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
-                .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
-    }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);

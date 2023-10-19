@@ -1,5 +1,6 @@
 package com.VardhanProject.Springboot_backend.services.authentication;
 
+import com.VardhanProject.Springboot_backend.Securiities.JwtUtil;
 import com.VardhanProject.Springboot_backend.entities.dao.UserDAO;
 import com.VardhanProject.Springboot_backend.entities.User;
 import com.VardhanProject.Springboot_backend.model.LoginResponse;
@@ -14,11 +15,11 @@ import java.util.Optional;
 public class UserServices {
     private UserDAO UserDAO;
 
-    private JWTService jwtService;
-    public UserServices(UserDAO UserDAO, JWTService jwtService){
+    private JwtUtil jwtUtil;
+    public UserServices(UserDAO UserDAO, JwtUtil jwtUtil){
         this.UserDAO=UserDAO;
 
-        this.jwtService = jwtService;
+        this.jwtUtil = jwtUtil;
     }
 
     public User registerUser(RegistrationBody registrationBody) throws UserAlreadyExistsException {
