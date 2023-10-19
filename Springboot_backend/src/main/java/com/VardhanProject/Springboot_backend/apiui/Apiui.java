@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
 @Configuration
 @CrossOrigin
 @OpenAPIDefinition
@@ -30,26 +29,19 @@ public class Apiui implements WebMvcConfigurer {
     @Bean
     public OpenAPI baseOpenAPI(){
         return new OpenAPI()
-                .addSecurityItem(
-                        new SecurityRequirement().addList("bearerAuth")
-                )
+                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .info(
                         new Info().title("Vardhan Backend")
                                 .version("1.0")
                                 .description("Spring Boot Api Documentation")
-                                .contact(
-                                        new io.swagger.v3.oas.models.info.Contact()
+                                .contact( new io.swagger.v3.oas.models.info.Contact()
                                         .name("Akshat Sharma")
-                                        .email("sacp7201@gmail.com")
-                                )
+                                        .email("sacp7201@gmail.com"))
                 );
     }
     @Override
     public void addCorsMappings(CorsRegistry registery) {
-        registery
-                .addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET","POST","PUT","DELETE");
+        registery.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
     }
 
 }
