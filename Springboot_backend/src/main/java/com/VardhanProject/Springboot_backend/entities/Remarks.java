@@ -18,7 +18,7 @@ public class Remarks {
     private String remarks;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
 }

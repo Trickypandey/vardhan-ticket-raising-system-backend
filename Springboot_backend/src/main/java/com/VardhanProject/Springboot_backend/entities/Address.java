@@ -15,7 +15,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "address_id", nullable = false)
-    private Integer address_id;
+    private Integer id;
 
     @Column(name = "address_line_1", nullable = false)
     private String address_line_1;
