@@ -1,5 +1,6 @@
 package com.VardhanProject.Springboot_backend.controllers;
 
+import com.VardhanProject.Springboot_backend.Utilities.TicketStatus;
 import com.VardhanProject.Springboot_backend.payloads.TicketDto;
 import com.VardhanProject.Springboot_backend.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +73,23 @@ public class TicketController {
         TicketDto updatedTicket = ticketService.updateTicketAssignedTo(ticketId, newAssignedTo);
         return new ResponseEntity<>(updatedTicket, HttpStatus.OK);
     }
+
+    @GetMapping("/new")
+    public ResponseEntity<List<TicketDto>> getNewTickets() {
+        List<TicketDto> newTickets = ticketService.getTicketsByStatus(String.valueOf(TicketStatus.NEW));
+        return new ResponseEntity<>(newTickets, HttpStatus.OK);
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<TicketDto>> getPendingTickets() {
+        List<TicketDto> pendingTickets = ticketService.getTicketsByStatus(String.valueOf(TicketStatus.ASSIGNED));
+        return new ResponseEntity<>(pendingTickets, HttpStatus.OK);
+    }
+
+    @GetMapping("/completed")
+    public ResponseEntity<List<TicketDto>> getCompletedTickets() {
+        List<TicketDto> completedTickets = ticketService.getTicketsByStatus(String.valueOf(TicketStatus.RESOLVED));
+        return new ResponseEntity<>(completedTickets, HttpStatus.OK);
+    }
+
 }

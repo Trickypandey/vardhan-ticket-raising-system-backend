@@ -12,4 +12,6 @@ public interface TicketService {
     void deleteTicket(Integer ticketId);
     TicketDto updateTicketStatus(Integer ticketId, String newStatus);
     TicketDto updateTicketAssignedTo(Integer ticketId, Integer newAssignedTo);
+
+    List<TicketDto> getTicketsByStatus(String status);
 }

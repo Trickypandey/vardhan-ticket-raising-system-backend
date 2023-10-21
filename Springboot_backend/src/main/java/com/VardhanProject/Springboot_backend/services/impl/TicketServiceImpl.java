@@ -102,4 +102,13 @@ public class TicketServiceImpl implements TicketService {
             throw new ResourceNotFoundException("Ticket with ID " , "ticketId" , ticketId);
         }
     }
+    @Override
+    public List<TicketDto> getTicketsByStatus(String status) {
+        List<Tickets> tickets = ticketRepository.findByStatus(status);
+
+        // Convert Ticket entities to TicketDto objects
+        return tickets.stream()
+                .map(ticket -> modelMapper.map(ticket, TicketDto.class))
+                .collect(Collectors.toList());
+    }
 }
