@@ -1,5 +1,6 @@
 package com.VardhanProject.Springboot_backend.Securiities;
 
+import com.VardhanProject.Springboot_backend.Securiities.JwtAuthenticationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -44,13 +45,14 @@ public class SecurityConfiguration {
     };
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorization) -> authorization
-                        .requestMatchers(ADMIN_URL).permitAll()
-                        .requestMatchers(PUBLIC_URL).permitAll()
+                        .requestMatchers("/auth/login","/api/tickets/**","/api/**").permitAll() // Allow access to /auth/login without authentication
+//                        .antMatchers(PUBLIC_URL).permitAll()
+//                        .antMatchers(ADMIN_URL).permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(this.jwtAuthenticationEntryPoint))

@@ -39,9 +39,18 @@ public class Apiui implements WebMvcConfigurer {
                                         .email("sacp7201@gmail.com"))
                 );
     }
-    @Override
-    public void addCorsMappings(CorsRegistry registery) {
-        registery.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000") // Allow requests from your frontend URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
+                        .allowCredentials(true);
+            }
+        };
     }
+
 
 }
