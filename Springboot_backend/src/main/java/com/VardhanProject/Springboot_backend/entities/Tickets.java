@@ -27,8 +27,9 @@ public class Tickets {
     @Column(name = "customer_id")
     private Integer customerId;
 
-    @Column(name = "assigned_to")
-    private Integer assignedTo;
+    @ManyToOne
+    @JoinColumn(name = "assigned_to", referencedColumnName = "user_id")
+    private User assignedToUser;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")

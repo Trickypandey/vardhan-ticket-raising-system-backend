@@ -65,5 +65,16 @@ public class CustomerServiceImpl implements CustomerService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public CustomerDto getCustomerById(Integer customerId) {
+        Optional<Customer> foundCustomer = customerRepository.findById(customerId);
+
+        // Use ModelMapper to map the Customer entity to a CustomerDto
+        // Handle case where customer with the given ID is not found
+        // Or throw an exception or handle the case as needed
+        return foundCustomer.map(customer -> modelMapper.map(customer, CustomerDto.class)).orElse(null);
+
+    }
+
 
 }

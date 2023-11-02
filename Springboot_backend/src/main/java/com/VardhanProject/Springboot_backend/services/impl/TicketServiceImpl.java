@@ -92,7 +92,7 @@ public class TicketServiceImpl implements TicketService {
         if (optionalTicket.isPresent()) {
             Tickets existingTicket = optionalTicket.get();
 
-            existingTicket.setAssignedTo(newAssignedTo);
+//            existingTicket.setAssignedTo(newAssignedTo);
 
             // Save the updated ticket
             Tickets updatedTicket = ticketRepository.save(existingTicket);

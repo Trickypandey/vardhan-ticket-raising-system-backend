@@ -43,6 +43,17 @@ public class CustomerController {
         return customerRepository.findAllCustomersWithAddresses();
     }
 
+    @GetMapping("/getCustomer/{customerid}")
+    public  ResponseEntity<CustomerDto> getCustomerById(@PathVariable Integer customerid){
+        CustomerDto customer = customerService.getCustomerById(customerid);
+
+        if (customer != null) {
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/getAddress/{addressId}")
     public ResponseEntity<AddressDto> getAddressByAddressId(@PathVariable Integer addressId) {
         Optional<Address> address = addressRepository.findById(addressId);

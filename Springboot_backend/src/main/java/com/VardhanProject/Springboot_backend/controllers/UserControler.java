@@ -28,7 +28,7 @@ public class UserControler {
     public ResponseEntity<UserDto> getUserById(@PathVariable int userId) {
         // Call the UserService to retrieve the user by ID
         UserDto resultDto = this.userService.getUserById(userId);
-        return new ResponseEntity<>(resultDto,HttpStatus.CREATED);
+        return new ResponseEntity<>(resultDto,HttpStatus.OK);
     }
     @GetMapping("/alluser")
     public ResponseEntity<List<UserDto>> getAllUser() {

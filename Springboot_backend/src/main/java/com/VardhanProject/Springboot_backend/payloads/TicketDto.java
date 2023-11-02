@@ -12,7 +12,7 @@ public class TicketDto {
     private String query;
     private String status;
     private Integer customerId;
-    private Integer assignedTo;
+//    private Integer assignedTo;
     private String creationDate;
     private String remarks;
 

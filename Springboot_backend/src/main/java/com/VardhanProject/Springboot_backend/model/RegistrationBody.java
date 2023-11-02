@@ -32,7 +32,7 @@ public class RegistrationBody {
     @Getter
     @NotBlank
     @NotNull
-    private Integer number;
+    private String number;
 
     @Getter
     @NotBlank

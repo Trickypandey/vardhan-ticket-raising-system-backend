@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.util.List;
+
 
 @NoArgsConstructor
 @Getter
@@ -33,13 +35,15 @@ public class UserDto {
     private String role;
 
 //    @Pattern(regexp = "\\d{10}", message = "Number must be a 10-digit numeric value")
-    private Integer number;
+    private String number;
 
     private String user_image;
 
 //    @NotBlank(message = "Email is required")
 //    @Email(message = "Invalid email format")
     private String email;
+
+    private List<TicketDto> ticketsAssigned;
 
     // Getters and setters
     // You can generate getters and setters using your IDE or Lombok if you prefer

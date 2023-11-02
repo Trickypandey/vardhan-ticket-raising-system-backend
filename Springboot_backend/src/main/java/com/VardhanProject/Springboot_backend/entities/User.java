@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,15 +38,16 @@ public class User implements UserDetails {
     private String role;
 
     @Column(name = "number", length = 10)
-    @JdbcTypeCode(SqlTypes.NUMERIC)
-    private Integer number;
-
+    private String number;
 
     @Column(name = "user_image")
     private String user_image;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "assignedToUser")
+    private List<Tickets> ticketsAssigned;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
