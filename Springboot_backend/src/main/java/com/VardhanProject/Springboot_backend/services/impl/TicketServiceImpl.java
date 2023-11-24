@@ -1,10 +1,14 @@
 package com.VardhanProject.Springboot_backend.services.impl;
 
+import com.VardhanProject.Springboot_backend.Utilities.TicketStatus;
 import com.VardhanProject.Springboot_backend.entities.Tickets;
+import com.VardhanProject.Springboot_backend.entities.User;
 import com.VardhanProject.Springboot_backend.exceptions.ResourceNotFoundException;
 import com.VardhanProject.Springboot_backend.payloads.TicketDto;
+import com.VardhanProject.Springboot_backend.payloads.UserDto;
 import com.VardhanProject.Springboot_backend.repos.TicketRepository;
 import com.VardhanProject.Springboot_backend.services.TicketService;
+import com.VardhanProject.Springboot_backend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,9 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -61,29 +68,24 @@ public class TicketServiceImpl implements TicketService {
             return null; // Handle the case where the ticket is not found
         }
     }
-
-    @Override
-    public void deleteTicket(Integer ticketId) {
-        ticketRepository.deleteById(ticketId);
-    }
-
     @Override
     public TicketDto updateTicketStatus(Integer ticketId, String newStatus) {
         Optional<Tickets> optionalTicket = ticketRepository.findById(ticketId);
 
         if (optionalTicket.isPresent()) {
             Tickets existingTicket = optionalTicket.get();
-
             existingTicket.setStatus(newStatus);
-
-            // Save the updated ticket
             Tickets updatedTicket = ticketRepository.save(existingTicket);
-
             return modelMapper.map(updatedTicket, TicketDto.class);
         } else {
             throw new ResourceNotFoundException("Ticket with ID " , "ticketId" , ticketId);
         }
     }
+    @Override
+    public void deleteTicket(Integer ticketId) {
+        ticketRepository.deleteById(ticketId);
+    }
+
 
     @Override
     public TicketDto updateTicketAssignedTo(Integer ticketId, Integer newAssignedTo) {
@@ -91,10 +93,13 @@ public class TicketServiceImpl implements TicketService {
 
         if (optionalTicket.isPresent()) {
             Tickets existingTicket = optionalTicket.get();
+            UserDto assignedUser = this.userService.getUserById(newAssignedTo);
 
-//            existingTicket.setAssignedTo(newAssignedTo);
+            User convertedUser = modelMapper.map(assignedUser,User.class);
+            existingTicket.setAssignedToUser(convertedUser);
+            existingTicket.setStatus(TicketStatus.ASSIGNED.name());
 
-            // Save the updated ticket
+//             Save the updated ticket
             Tickets updatedTicket = ticketRepository.save(existingTicket);
 
             return modelMapper.map(updatedTicket, TicketDto.class);
@@ -111,4 +116,18 @@ public class TicketServiceImpl implements TicketService {
                 .map(ticket -> modelMapper.map(ticket, TicketDto.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public UserDto getUsersByTicketId(Integer ticketId) {
+        Optional<Tickets> optionalTicket = ticketRepository.findById(ticketId);
+
+        if (optionalTicket.isPresent()) {
+            Tickets ticket = optionalTicket.get();
+            User users = ticket.getAssignedToUser();
+            return modelMapper.map(users,UserDto.class);
+        } else {
+            throw new ResourceNotFoundException("Ticket with ID ", "ticketId", ticketId);
+        }
+    }
+
 }

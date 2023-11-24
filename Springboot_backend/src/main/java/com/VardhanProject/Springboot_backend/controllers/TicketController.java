@@ -2,6 +2,8 @@ package com.VardhanProject.Springboot_backend.controllers;
 
 import com.VardhanProject.Springboot_backend.Utilities.TicketStatus;
 import com.VardhanProject.Springboot_backend.payloads.TicketDto;
+import com.VardhanProject.Springboot_backend.payloads.UserDto;
+import com.VardhanProject.Springboot_backend.repos.UserRepo;
 import com.VardhanProject.Springboot_backend.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +41,13 @@ public class TicketController {
         }
     }
 
+    @PatchMapping("/{ticketId}/assign")
+    public ResponseEntity<TicketDto> updateTicketAssignedTo(
+            @PathVariable Integer ticketId,
+            @RequestParam Integer newAssignedTo) {
+        TicketDto updatedTicket = ticketService.updateTicketAssignedTo(ticketId, newAssignedTo);
+        return new ResponseEntity<>(updatedTicket, HttpStatus.OK);
+    }
     @PutMapping("/{ticketId}")
     public ResponseEntity<TicketDto> updateTicket(
             @PathVariable Integer ticketId,
@@ -66,13 +75,6 @@ public class TicketController {
         return new ResponseEntity<>(updatedTicket, HttpStatus.OK);
     }
 
-    @PatchMapping("/{ticketId}/assign")
-    public ResponseEntity<TicketDto> updateTicketAssignedTo(
-            @PathVariable Integer ticketId,
-            @RequestParam Integer newAssignedTo) {
-        TicketDto updatedTicket = ticketService.updateTicketAssignedTo(ticketId, newAssignedTo);
-        return new ResponseEntity<>(updatedTicket, HttpStatus.OK);
-    }
 
     @GetMapping("/new")
     public ResponseEntity<List<TicketDto>> getNewTickets() {
@@ -90,6 +92,11 @@ public class TicketController {
     public ResponseEntity<List<TicketDto>> getCompletedTickets() {
         List<TicketDto> completedTickets = ticketService.getTicketsByStatus(String.valueOf(TicketStatus.RESOLVED));
         return new ResponseEntity<>(completedTickets, HttpStatus.OK);
+    }
+    @GetMapping("/userWithTicket")
+    public ResponseEntity<UserDto> getUserWithTicketId( @RequestParam Integer ticketId) {
+        UserDto user = this.ticketService.getUsersByTicketId(ticketId);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
 }

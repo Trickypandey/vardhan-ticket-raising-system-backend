@@ -1,10 +1,12 @@
 package com.VardhanProject.Springboot_backend.services;
 
 import com.VardhanProject.Springboot_backend.payloads.TicketDto;
+import com.VardhanProject.Springboot_backend.payloads.UserDto;
 
 import java.util.List;
 
 public interface TicketService {
+    UserDto getUsersByTicketId(Integer ticketId);
     TicketDto createTicket(TicketDto ticketDto);
     List<TicketDto> getAllTickets();
     TicketDto getTicketById(Integer ticketId);
