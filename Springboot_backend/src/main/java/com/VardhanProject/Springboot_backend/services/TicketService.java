@@ -6,6 +6,7 @@ import com.VardhanProject.Springboot_backend.payloads.UserDto;
 import java.util.List;
 
 public interface TicketService {
+    List<UserDto> getUsersWithNoTasksOrCancelledOrCompletedTasks();
     UserDto getUsersByTicketId(Integer ticketId);
     TicketDto createTicket(TicketDto ticketDto);
     List<TicketDto> getAllTickets();

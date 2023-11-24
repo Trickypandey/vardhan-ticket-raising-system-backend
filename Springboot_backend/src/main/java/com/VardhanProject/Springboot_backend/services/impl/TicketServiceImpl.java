@@ -130,4 +130,23 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
+    @Override
+    public List<UserDto> getUsersWithNoTasksOrCancelledOrCompletedTasks() {
+        // Retrieve all users
+        List<UserDto> allUsers = userService.getAllUser();
+
+        // Filter users who have no tasks or their tasks are canceled or completed
+        List<UserDto> filteredUsers = allUsers.stream()
+                .filter(user -> user.getTicketsAssigned().isEmpty() ||
+                        user.getTicketsAssigned().stream()
+                                .allMatch(ticket -> isCancelledOrCompleted(ticket.getStatus())))
+                .collect(Collectors.toList());
+        return filteredUsers;
+    }
+
+    private boolean isCancelledOrCompleted(String status) {
+        return !TicketStatus.ASSIGNED.name().equals(status);
+    }
+
+
 }

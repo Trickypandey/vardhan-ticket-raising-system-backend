@@ -99,4 +99,9 @@ public class TicketController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/freeusers")
+    public ResponseEntity<List<UserDto>> getFreeUsers(){
+        return new ResponseEntity<>(this.ticketService.getUsersWithNoTasksOrCancelledOrCompletedTasks(),HttpStatus.OK);
+    }
+
 }
